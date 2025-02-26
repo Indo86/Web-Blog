@@ -1,10 +1,18 @@
-import './assets/main.css'
-
+// import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
 import App from './App.vue'
 import router from './router'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import jQuery from 'jquery'
+
+window.$= jQuery
+
+// Clean Blog
+import '@/assets/css/styles.css';
+import '@/assets/js/scripts.js';
 
 const app = createApp(App)
 
