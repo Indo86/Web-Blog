@@ -8,7 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import jQuery from 'jquery'
 
-window.$= jQuery
+window.$=jQuery
 
 // Clean Blog
 import '@/assets/css/styles.css';
