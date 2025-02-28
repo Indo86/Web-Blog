@@ -508,52 +508,59 @@ section.homepage .content .content-right h1 .highlight {
     border-bottom-left-radius: 0;
   }
 }
-
-footer{
+footer {
   width: 100%;
   display: flex;
   justify-content: center;
   background-color: whitesmoke;
   padding: 20px 0;
-
 }
 
-footer div{
+footer div {
   padding: 0 10px;
   max-width: 1200px;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-footer span{
+footer span {
   color: #000;
   display: flex;
   align-items: center;
 }
 
-footer a{
-  padding: 0;
-  text-decoration: none;
+footer .link {
+  display: flex;
+  gap: 20px;
 }
 
-footer a{
-  margin-left: 40px;
+footer a {
   text-decoration: none;
   color: #000;
-  height: 100%;
-  padding: 20px 0;
-  display: inline-block;
+  padding: 10px 0;
 }
 
-footer a:hover{
+footer a:hover {
   color: orange;
 }
 
-
+/* Responsive untuk layar kecil */
 @media screen and (max-width: 760px) {
-  footer a{
-    height: 0;
+  footer div {
+    flex-direction: column-reverse;
+    text-align: center;
   }
 
+  footer .link {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  footer a {
+    margin-left: 0;
+    padding: 5px 0;
+  }
 }
