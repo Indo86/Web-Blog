@@ -51,7 +51,6 @@ section.homepage .content .content-left{
 
 .about-me {
   padding: 60px 0;
-  background-color: #f9f9f9;
   text-align: center;
 }
 .container {
