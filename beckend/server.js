@@ -6,9 +6,6 @@ import postRoutes from './routes/postRoutes.js';
 import path from 'path';
 
 dotenv.config({ path: path.resolve('.env') });
-console.log("MongoDB URI:", process.env.MONGO_URI); // Debugging
-dotenv.config();
-console.log("MongoDB URI:", process.env.MONGO_URI);
 const app = express();
 app.use(express.json());
 app.use(cors());
