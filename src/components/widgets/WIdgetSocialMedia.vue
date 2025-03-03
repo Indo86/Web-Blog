@@ -12,7 +12,7 @@
         <a href="https://instagram.com/deni_norman_z" target="_blank" class="social-link instagram">
           <i class="bi bi-instagram"></i>
         </a>
-        <a href="https://www.threads.net/@yourusername" target="_blank" class="social-link threads">
+        <a href="https://www.threads.net/deni_norman_z" target="_blank" class="social-link threads">
           <i class="bi bi-threads"></i>
         </a>
         <a href="https://www.linkedin.com/in/deni-norman-zaky-5590a3187/" target="_blank" class="social-link linkedin">
