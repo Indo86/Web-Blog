@@ -1,91 +1,100 @@
 <script setup>
+import { onMounted, ref, computed } from 'vue';
+import { getPost, deletePost } from '@/services/api';
+import { useRoute, useRouter } from 'vue-router';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 
+const route = useRoute();
+const router = useRouter();
+const post = ref(null);
+const loading = ref(true);
+const error = ref(null);
+const postId = route.params.id;
 
+onMounted(async () => {
+  try {
+    post.value = await getPost(postId);
+  } catch (err) {
+    error.value = 'Gagal mengambil data post';
+  } finally {
+    loading.value = false;
+  }
+});
+
+const formattedText = computed(() => {
+  return post.value?.content ? post.value.content.split('\n') : [];
+});
+
+const handleDelete = async () => {
+  const confirmDelete = confirm("Apakah Anda yakin ingin menghapus blog ini?");
+  if (!confirmDelete) return;
+
+  try {
+    await deletePost(postId);  
+    alert("Post berhasil dihapus!");
+    router.back();
+  } catch (err) {
+    alert("Gagal menghapus post.");
+    console.error("Error deleting post:", err);
+  }
+};
 </script>
 
 <template>
-<Navbar/>
-    <!-- Page content-->
-    <div class="container content-blog">
-            <div class="row">
-                <div class="col-lg-8">
-                    <!-- Post content-->
-                    <article>
-                        <!-- Post header-->
-                        <header class="mb-4">
-                            <!-- Post title-->
-                            <h1 class="fw-bolder mb-1">Welcome to Blog Post!</h1>
-                            <!-- Post meta content-->
-                            <div class="text-muted fst-italic mb-2">Posted on January 1, 2023 by Start Bootstrap</div>
-                            <!-- Post categories-->
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
-                        </header>
-                        <!-- Preview image figure-->
-                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
-                        <!-- Post content-->
-                        <section class="mb-5">
-                            <p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.</p>
-                            <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know it are everywhere, so there's no reason to think that Earth would be unique in that regard. Whether of not the life became intelligent is a different question, and we'll see if we find that.</p>
-                            <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough and carry enough energy into our system to disrupt transportation, communication, the food chains, and that can be a really bad day on Earth.</p>
-                            <h2 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h2>
-                            <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic thoughts every day and I realized I could hold them to myself or share them with people who might be interested.</p>
-                            <p class="fs-5 mb-4">Venus has a runaway greenhouse effect. I kind of want to know what happened there because we're twirling knobs here on Earth without knowing the consequences of it. Mars once had running water. It's bone dry today. Something bad happened there as well.</p>
-                        </section>
-                    </article>
-                 <hr>
-                </div>
-                <!-- Side widgets-->
-                <div class="col-lg-4">
-                    <!-- Search widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Search</div>
-                        <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Categories widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Web Design</a></li>
-                                        <li><a href="#!">HTML</a></li>
-                                        <li><a href="#!">Freebies</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                    </div>
-                </div>
+  <Navbar />
+  <div class="container content-blog">
+    <div class="row">
+      <div class="col-lg-8">
+        <article v-if="loading">Loading...</article>
+        <article v-else-if="error">{{ error }}</article>
+        <article v-else>
+          <!-- Post header -->
+          <header class="mb-4">
+            <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+            <div class="text-muted fst-italic mb-2">Posted on {{ post.date }}</div>
+          </header>
+          <!-- Featured image -->
+          <figure class="mb-4">
+            <img class="img-fluid rounded" :src="post.imageUrl" alt="Post image" />
+          </figure>
+          <!-- Post content -->
+          <section class="mb-5">
+            <p v-for="(paragraph, index) in formattedText" :key="index" class="fs-5 mb-4">
+              {{ paragraph }}
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <router-link :to="{ name: 'EditPost', params: { id: post.id } }" class="btn btn-outline-warning me-md-2">
+                    Edit 
+                    <i class="bi bi-pencil-square"></i>
+                </router-link>
+                <button @click="handleDelete" class="btn btn-outline-danger" type="button">
+                    Delete 
+                    <i class="bi bi-trash3"></i>
+                </button>
             </div>
+          </section>
+        </article>
+      </div>
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-header">Categories</div>
+          <div class="card-body">
+            <ul class="list-unstyled">
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">JavaScript</a></li>
+            </ul>
+          </div>
         </div>
-    
-<Footer/>
+      </div>
+    </div>
+  </div>
+  <Footer />
 </template>
 
 <style scoped>
-.content-blog{
+.content-blog {
   margin-top: 100px;
 }
-
 </style>

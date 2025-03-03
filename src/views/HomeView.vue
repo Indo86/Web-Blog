@@ -1,144 +1,55 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import PostList from '@/components/Posts/PostList.vue';
+import { getPosts } from '@/services/api';
+
+const posts = ref([]);
+
+onMounted(async () => {
+    posts.value = await getPosts();
+});
+console.log(posts.value)
+
 </script>
 
 <template>
-<Navbar/>
-         <!-- Page Header-->
-<section class="homepage" id="homepage">
-  <div class="content">
-    <div class="content-left col-4">
-      <h1>Capture the Moments, <br> Share the Stories.</h1>
-      <p>Every photo tells a story, and every story deserves to be shared.
-        Join me on this journey of visual storytelling and inspiration.
-      </p>
-      <a href="#blog" class="btn-explore" aria-label="Explore My Blog">Explore My Blog</a>
-    </div>
-    <div class="content-right"></div>
-  </div>
-</section>
-
-        <!-- Main Content-->
-     <div class="container mt-5">
-        <h1 class="text-center mb-3">My Blog</h1>
-            <div class="row">
-                <!-- Blog entries-->
-                <div class="col-lg-8">
-                    <!-- Featured blog post-->
-                    <div class="card mb-4">
-                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                        <div class="card-body">
-                            <div class="small text-muted">January 1, 2023</div>
-                            <h2 class="card-title">Featured Post Title</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                            <a class="btn btn-primary" href="#!">Read more →</a>
-                        </div>
-                    </div>
-                    <!-- Nested row for non-featured blog posts-->
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                            <!-- Blog post-->
-                            <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Side widgets-->
-                <div class="col-lg-4">
-                    <!-- Search widget-->
-                    <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                    </div>
-                    <!-- Categories widget-->
-                    <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                    </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2023</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                    </div>
-                </div>
-               
-                <div class="btn-blog d-flex flex-row justify-content-center mb-5">
-                    <a href="#blog" class="btn-explore" aria-label="Explore My Blog">Explore My Blog</a>
-                </div>
-            </div>
+    <Navbar/>
+    <!-- Page Header -->
+    <section class="homepage" id="homepage">
+        <div class="content">
+        <div class="content-left col-4">
+            <h1>Capture the Moments, <br> Share the Stories.</h1>
+            <p>Every photo tells a story, and every story deserves to be shared.
+            Join me on this journey of visual storytelling and inspiration.
+            </p>
+            <a href="#blog" class="btn-explore" aria-label="Explore My Blog">Explore My Blog</a>
         </div>
-<Footer/>
+        <div class="content-right"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h1 class="text-center mb-3">My Blog</h1>
+        <PostList :posts="posts" />
+    </div>
+
+    <Footer/>
 </template>
 
 <style scoped>
-
-section.homepage {
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)),
-              url(https://images.unsplash.com/photo-1541516160071-4bb0c5af65ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-  background-size: cover;
-  background-position: center 45%;
-  background-attachment: fixed;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  color: white;
-  padding: 0 5%;
-}
-
-
+    section.homepage {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)),
+                url(https://images.unsplash.com/photo-1541516160071-4bb0c5af65ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-size: cover;
+    background-position: center 45%;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 0 5%;
+    }
 </style>

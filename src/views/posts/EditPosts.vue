@@ -1,58 +1,56 @@
 <script setup>
-import Navbar from '@/components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
-import { ref, watch } from 'vue';
-import { createPost } from '@/services/api';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { getPost, updatePost } from '@/services/api';
 
+const route = useRoute();
+const router = useRouter();
+
+const postId = route.params.id;
 const title = ref('');
-const content = ref('');
 const author = ref('');
 const imageUrl = ref('');
 const tags = ref('');
-const previewImage = ref('');
+const content = ref('');
 
-watch(imageUrl, (newUrl) => {
-  previewImage.value = newUrl || null;
+onMounted(async () => {
+    try {
+        const post = await getPost(postId);
+        title.value = post.title;
+        author.value = post.author;
+        imageUrl.value = post.imageUrl;
+        tags.value = post.tags;
+        content.value = post.content;
+    } catch (err) {
+        console.error('Gagal mengambil data post:', err);
+    }
 });
 
 const handleSubmit = async () => {
-  const postData = {
-    title: title.value,
-    content: content.value,
-    author: author.value,
-    imageUrl: imageUrl.value,
-    tags: tags.value.split(',').map(tag => tag.trim()),
-  };
+    try {
+        await updatePost(postId, {
+            title: title.value,
+            author: author.value,
+            imageUrl: imageUrl.value,
+            tags: tags.value,
+            content: content.value,
+        });
+        router.push({ name: 'ShowBlog', params: { id: postId } });
+    } catch (err) {
+        console.error('Gagal memperbarui post:', err);
+    }
+};
 
-  try {
-    const response = await createPost(postData);
-    alert(`Story submitted successfully! ID: ${response.data.id}`);
-
-    title.value = '';
-    content.value = '';
-    author.value = '';
-    imageUrl.value = '';
-    tags.value = '';
-    previewImage.value = null;
-
-  } catch (error) {
-    console.error("Error submitting post:", error);
-    alert("Failed to submit post.");
-  }
+const handleDiscard = () => {
+    router.push({ name: 'ShowBlog', params: { id: postId } });
 };
 </script>
 
-<template>
-  <Navbar />
-  <section class="homepage" id="homepage">
-  <div class="content">
-    <h1>Write Your Story</h1>
-  </div>
-</section>
 
-  <section class="create-post">
+<template>
+  <section class="edit-post">
     <div class="container container-form">
-      <h1>Write a Story</h1>
+      <h1>Edit a Story</h1>
       <form @submit.prevent="handleSubmit">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
@@ -65,7 +63,7 @@ const handleSubmit = async () => {
         </div>
 
         <div class="mb-3">
-          <label for="imageUrl" class="form-label">Paste an Image URL</label>
+          <label for="imageUrl" class="form-label">Image URL</label>
           <input v-model="imageUrl" type="url" class="form-control" id="imageUrl" placeholder="e.g., https://source.unsplash.com/random">
           <small class="text-muted image-caption">
             I recommend you to pick an image from 
@@ -85,32 +83,19 @@ const handleSubmit = async () => {
           <label for="content" class="form-label">Story</label>
           <textarea v-model="content" class="form-control long-text" id="content" rows="5" required></textarea>
         </div>
-
-        <button type="submit" class="btn btn-primary">Post</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="submit" class="btn btn-outline-primary me-md-2" @click="handleSubmit">Save</button>
+          <button type="button" class="btn btn-outline-danger" @click="handleDiscard">Discard</button>
+        </div>
       </form>
     </div>
   </section>
-  <Footer />
+
 </template>
 
+<style scoped>
 
-  <style scoped>
-  section.homepage {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)),
-                url(https://images.unsplash.com/photo-1541516160071-4bb0c5af65ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fA%3D%3D);
-    background-size: cover;
-    background-position: center 65%;
-    background-attachment: fixed;
-    height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-    padding: 0 5%;
-  }
-
-  section.create-post {
+  section.edit-post {
     padding: 50px;
   }
 
@@ -152,4 +137,4 @@ const handleSubmit = async () => {
   }
 
 
-  </style>
+</style>
