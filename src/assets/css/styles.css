@@ -220,9 +220,45 @@ section.homepage .content .content-right h1 .highlight {
     text-align: center;
   }
 
-  section.homepage .content .content-left,
-  section.homepage .content .content-right {
+  section.homepage .content .content-left {
     padding: 30px;
+    width: 100%;
+  }
+
+  section.homepage .content h1 {
+    font-size: 36px; /* Perkecil font untuk layar kecil */
+  }
+
+  section.homepage .content p {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .btn-explore {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  section.homepage .content-left {
+    padding: 20px;
+  }
+
+  section.homepage .content h1 {
+    font-size: 28px; /* Lebih kecil untuk layar HP */
+  }
+
+  section.homepage .content p {
+    font-size: 14px;
+    max-width: 100%;
+  }
+
+  .btn-explore {
+    font-size: 14px;
+    padding: 8px 16px;
   }
 }
 

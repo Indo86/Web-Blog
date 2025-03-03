@@ -136,5 +136,4 @@ const handleDiscard = () => {
     text-align: center;
   }
 
-
 </style>

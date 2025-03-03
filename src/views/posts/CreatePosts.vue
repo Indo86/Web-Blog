@@ -25,8 +25,8 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await createPost(postData);
-    alert(`Story submitted successfully! ID: ${response.data.id}`);
+    await createPost(postData);
+    alert(`Story submitted successfully!`);
 
     title.value = '';
     content.value = '';

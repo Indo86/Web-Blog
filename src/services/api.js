@@ -20,6 +20,7 @@ export const getPosts = async () => {
       title: post.title,
       content: post.content,
       imageUrl: post.imageUrl, 
+      tags: post.tags,
       date: new Date(post.createdAt).toDateString(),
     }));
   } catch (error) {
