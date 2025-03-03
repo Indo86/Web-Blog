@@ -7,7 +7,7 @@
         <!-- Footer-->
     <footer>
       <div>
-        <span>Copyright © 2024 All Rights Reserved </span>
+        <span>Copyright © 2025 All Rights Reserved </span>
         <span class="link">
           <a href="#home">Home</a>
           <a href="#contact">About Me</a>
