@@ -32,7 +32,7 @@ const handleSubmit = async () => {
             title: title.value,
             author: author.value,
             imageUrl: imageUrl.value,
-            tags: tags.value,
+            tags: tags.value.split(',').map(tag => tag.trim()),
             content: content.value,
         });
         router.push({ name: 'ShowBlog', params: { id: postId } });

@@ -28,7 +28,9 @@ const limitedPosts = computed(() => posts.value.slice(0, 5));
                 <p>Every photo tells a story, and every story deserves to be shared.
                 Join me on this journey of visual storytelling and inspiration.
                 </p>
+                <router-link to="/Blog">
                 <a href="#blog" class="btn-explore" aria-label="Explore My Blog">Explore My Blog</a>
+                </router-link>
             </div>
             <div class="content-right"></div>
         </div>
@@ -38,7 +40,6 @@ const limitedPosts = computed(() => posts.value.slice(0, 5));
     <div class="container mt-5">
        <div class="row">
             <h1 class="text-center mb-3">My Blog</h1>
-            <!-- Mengirim hanya 5 post ke komponen PostList -->
             <PostList :posts="limitedPosts" />
             <div class="col-lg-4">
                 <WidgetSocialMedia/>
@@ -46,7 +47,6 @@ const limitedPosts = computed(() => posts.value.slice(0, 5));
             </div>
        </div>
     </div>
-
     <Footer/>
 </template>
 

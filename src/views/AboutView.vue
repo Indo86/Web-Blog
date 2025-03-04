@@ -29,7 +29,9 @@ import Footer from '@/components/Footer.vue';
           <h2>About Me</h2>
           <p class="caption">Behind every story is a storyteller. Get to know me, my journey, and the passion that fuels my creativity.</p>
           <p>Hi, I'm Hannah. A passionate storyteller capturing life's moments through words and visuals. My journey is all about exploring new perspectives, sharing experiences, and inspiring others through creative storytelling.</p>
-          <a href="#blog" class="btn-explore">Explore My Blog</a>
+          <router-link to="/Blog">
+                <a href="#blog" class="btn-explore" aria-label="Explore My Blog">Explore My Blog</a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -43,6 +45,8 @@ section.homepage {
   background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2)), 
               url(https://images.unsplash.com/photo-1515036813970-3beada24ab5b?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
    background-position: center 50%;
+   background-repeat: no-repeat;
+   background-size: cover;
 }
 
 section.homepage .content .content-left{
